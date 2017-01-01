@@ -1,0 +1,16 @@
+.idea
+.tmp
+config
+coverage
+gulp_tasks
+node_modules
+src
+.babelrc
+.editorconfig
+.gitattributes
+.gitignore
+.npmignore
+.travis.yml
+gulp.conf.js
+gulpfile.js
+
