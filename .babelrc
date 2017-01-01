@@ -1,0 +1,31 @@
+{
+  "presets": [
+    "es2015"
+  ],
+  "plugins": [
+    "transform-runtime",
+    "transform-object-rest-spread"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        ["istanbul", {
+          "exclude": [
+            "**/*.spec.js"
+          ]
+        }],
+        "rewire"
+      ]
+    },
+    "production": {
+      "presets": [
+        [
+          "es2015",
+          {
+            "modules": false
+          }
+        ]
+      ]
+    }
+  }
+}
