@@ -76,5 +76,30 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "2.1.0-beta.20"
+  },
+  "eslintConfig": {
+    "root": true,
+    "rules": {
+      "linebreak-style": 0,
+      "quotes": 0,
+      "object-curly-spacing": 0
+    },
+    "env": {
+      "browser": true,
+      "jasmine": true,
+      "es6": true,
+      "phantomjs": true
+    },
+    "extends": [
+      "xo-space/esnext"
+    ],
+    "plugins": [
+      "html"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
