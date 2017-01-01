@@ -1,0 +1,10 @@
+@import './utilities/fonts';
+
+$font-stack: 'Open Sans', sans-serif;
+
+:local .toast {
+  position: fixed;
+  line-height: 20px;
+  padding: 15px 10px;
+  font-family: $font-stack;
+}
