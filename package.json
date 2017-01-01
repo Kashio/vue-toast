@@ -1,0 +1,24 @@
+{
+  "name": "vue-toast",
+  "version": "1.0.0",
+  "description": "Vue.js toast plugin",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kashio/vue-toast.git"
+  },
+  "keywords": [
+    "vue",
+    "toast",
+    "plugin"
+  ],
+  "author": "Roy Mor <roy.mor173@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Kashio/vue-toast/issues"
+  },
+  "homepage": "https://github.com/Kashio/vue-toast#readme"
+}
