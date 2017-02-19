@@ -6,35 +6,33 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'eslint'
-      }
-    ],
-    loaders: [
+        enforce: 'pre',
+        use: 'eslint-loader'
+      },
       {
         test: /\.woff2?$/i,
-        loader: 'url?limit=8192'
+        use: 'url-loader?limit=8192',
       },
       {
         test: /\.s?css$/,
-        loaders: ExtractTextPlugin.extract({
-          fallbackLoader: 'style',
-          loader: 'css?minimize!sass'
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader?minimize', 'sass-loader']
         })
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        use: 'babel-loader'
       }
     ]
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),
@@ -43,6 +41,7 @@ module.exports = {
     }),
     new ExtractTextPlugin('index.css')
   ],
+  context: path.join(process.cwd(), conf.paths.src),
   output: {
     path: path.join(process.cwd(), conf.paths.dist),
     filename: '[name].js',
@@ -50,6 +49,6 @@ module.exports = {
     libraryTarget: 'commonjs2'
   },
   entry: {
-    index: `./${conf.path.src('index.js')}`
+    index: './index.js'
   }
 };
