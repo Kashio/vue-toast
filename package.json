@@ -32,6 +32,7 @@
     "vue": "^2.1.8"
   },
   "devDependencies": {
+    "autoprefixer": "^6.6.0",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
@@ -72,6 +73,7 @@
     "karma-webpack": "^1.8.1",
     "node-sass": "^4.1.1",
     "phantomjs-prebuilt": "^2.1.14",
+    "postcss-loader": "^1.2.1",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",

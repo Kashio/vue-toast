@@ -3,6 +3,7 @@ const conf = require('../gulp.conf');
 const path = require('path');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   module: {
@@ -43,6 +44,7 @@ module.exports = {
     }),
     new ExtractTextPlugin('index.css')
   ],
+  postcss: () => [autoprefixer],
   output: {
     path: path.join(process.cwd(), conf.paths.dist),
     filename: '[name].js',
