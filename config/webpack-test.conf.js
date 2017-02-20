@@ -1,29 +1,37 @@
+const webpack = require('webpack');
+const conf = require('../gulp.conf');
+const path = require('path');
+
 module.exports = {
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'eslint'
-      }
-    ],
-    loaders: [
+        enforce: 'pre',
+        use: 'eslint-loader'
+      },
       {
         test: /\.woff2?$/i,
-        loader: 'url?limit=8192'
+        use: 'url-loader?limit=8192',
       },
       {
         test: /\.s?css$/,
-        loaders: 'style!css!sass'
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        use: 'babel-loader'
       }
     ]
   },
-  plugins: [],
-  debug: true,
-  devtool: 'inline-source-map'
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    })
+  ],
+  devtool: 'inline-source-map',
+  context: path.join(process.cwd(), conf.paths.src),
+  entry: './app.js'
 };
