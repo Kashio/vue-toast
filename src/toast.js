@@ -3,6 +3,7 @@ import style from './css/toast.scss';
 
 const TOAST_CLASS = style.toast;
 const TOAST_CLOSE_BUTTON_CLASS = style['toast-close-button'];
+const TOAST_PROGRESS_BAR_CLASS = style['toast-progress-bar'];
 const TOAST_DEFAULT_BORDER_RADIUS = 0;
 const TOAST_DEFAULT_COLOR = 'white';
 const TOAST_DEFAULT_BACKGROUND_COLOR = 'rgba(60,118,61,.9)';
@@ -34,6 +35,9 @@ const kill = (toasts, index, options) => {
       $toast.detach();
     });
   toasts.splice(index, 1);
+  for (let i = index; i < toasts.length; i++) {
+    toasts[i].toastIndex--;
+  }
 };
 
 const create = (toasts, options) => {
@@ -46,6 +50,7 @@ const create = (toasts, options) => {
     backgroundColor: options.backgroundColor || TOAST_DEFAULT_BACKGROUND_COLOR
   });
   if (options.fixedWidth) {
+    $toast.attr('title', options.message);
     $toast.css({
       width: options.fixedWidth,
       textOverflow: 'ellipsis'
@@ -68,6 +73,12 @@ const create = (toasts, options) => {
     });
     $toast.append($closeButton);
   } else {
+    const $progressBar = createProgressBar(options);
+    $toast.$progressBar = $progressBar;
+    $toast.append($progressBar);
+    $progressBar.animate({
+      width: 'toggle'
+    }, options.time || TOAST_DEFAULT_TIME);
     setTimeout(() => {
       $toast
         .fadeOut(options.fade || TOAST_DEFAULT_FADE_SPEED, () => {
@@ -97,12 +108,35 @@ function createCloseButton(options) {
   return $closeButton;
 }
 
+function createProgressBar(options) {
+  const $progressBar = $(document.createElement('div'));
+  $progressBar.css({
+    backgroundColor: shadeColor(options.backgroundColor || TOAST_DEFAULT_BACKGROUND_COLOR, 50),
+    borderBottomLeftRadius: options.borderRadius || TOAST_DEFAULT_BORDER_RADIUS
+  });
+  $progressBar.addClass(TOAST_PROGRESS_BAR_CLASS);
+  return $progressBar;
+}
+
+function shadeColor(color, amount) {
+  const hexColor = parseInt(color.slice(1), 16);
+  let red = hexColor >> 16;
+  let green = (hexColor >> 8) & 0x00FF;
+  let blue = hexColor & 0x0000FF;
+  if (red >= amount) {
+    red -= amount;
+  }
+  if (green >= amount) {
+    green -= amount;
+  }
+  if (blue >= amount) {
+    blue -= amount;
+  }
+  return "#" + (0x1000000 + (red * 0x10000) + (green * 0x100) + blue).toString(16).slice(1);
+}
+
 function reverseShift(toasts, closedToastIndex, closedToastHeight, options) {
   const shiftFn = SHIFT_FN[options.position || TOAST_DEFAULT_POSITION];
-  for (let i = closedToastIndex; i < toasts.length; i++) {
-    const $toast = toasts[i];
-    $toast.toastIndex--;
-  }
   for (let i = closedToastIndex - 1; i >= 0; i--) {
     const $toast = toasts[i];
     shiftFn($toast, -(closedToastHeight + TOAST_MARGIN));

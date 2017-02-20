@@ -8,7 +8,7 @@ Vue.use(VueToast);
 function randomMessage() {
   let text = "";
   const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const numberOfCharacters = Math.floor(Math.random() * 100);
+  const numberOfCharacters = Math.floor(Math.random() * 100) + 1;
   for (let i = 0; i < numberOfCharacters; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
