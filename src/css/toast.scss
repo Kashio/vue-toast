@@ -4,7 +4,18 @@ $font-stack: 'Open Sans', sans-serif;
 
 :local .toast {
   position: fixed;
+  overflow: hidden;
   line-height: 20px;
   padding: 15px 10px;
+  font-family: $font-stack;
+}
+
+:local .toast-close-button:before {
+  content: '×';
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 95%;
+  font-weight: bold;
   font-family: $font-stack;
 }
