@@ -1,5 +1,5 @@
 {
-  "name": "vue-toast",
+  "name": "@kashio/vue-toast",
   "version": "1.0.2",
   "description": "Vue.js toast plugin",
   "main": "dist/index.js",
