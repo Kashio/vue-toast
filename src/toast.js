@@ -5,8 +5,8 @@ const TOAST_CLASS = style.toast;
 const TOAST_CLOSE_BUTTON_CLASS = style['toast-close-button'];
 const TOAST_PROGRESS_BAR_CLASS = style['toast-progress-bar'];
 const TOAST_DEFAULT_BORDER_RADIUS = 0;
-const TOAST_DEFAULT_COLOR = 'white';
-const TOAST_DEFAULT_BACKGROUND_COLOR = 'rgba(60,118,61,.9)';
+const TOAST_DEFAULT_COLOR = 'rgb(255, 255, 255)';
+const TOAST_DEFAULT_BACKGROUND_COLOR = 'rgba(60, 118, 61, .9)';
 const TOAST_DEFAULT_POSITION = 'bottom right';
 const TOAST_DEFAULT_FADE_SPEED = 400;
 const TOAST_DEFAULT_TIME = 3000;
@@ -41,28 +41,7 @@ const kill = (toasts, index, options) => {
 };
 
 const create = (toasts, options) => {
-  const $body = $('body');
-  const $toast = $(document.createElement('div'));
-  $toast.html(options.message);
-  $toast.css({
-    borderRadius: options.borderRadius || TOAST_DEFAULT_BORDER_RADIUS,
-    color: options.color || TOAST_DEFAULT_COLOR,
-    backgroundColor: options.backgroundColor || TOAST_DEFAULT_BACKGROUND_COLOR
-  });
-  if (options.fixedWidth) {
-    $toast.attr('title', options.message);
-    $toast.css({
-      width: options.fixedWidth,
-      textOverflow: 'ellipsis'
-    });
-  }
-  $toast.addClass(TOAST_CLASS);
-  POSITION_FN[options.position || TOAST_DEFAULT_POSITION]($toast);
-  $toast
-    .hide()
-    .appendTo($body)
-    .fadeIn(options.fade || TOAST_DEFAULT_FADE_SPEED);
-  $toast.toastIndex = toasts.length;
+  const $toast = createToast(toasts, options);
   if (options.closeButton) {
     const $closeButton = createCloseButton(options);
     $toast.$closeButton = $closeButton;
@@ -99,6 +78,32 @@ const shift = (toasts, options) => {
   }
 };
 
+function createToast(toasts, options) {
+  const $body = $('body');
+  const $toast = $(document.createElement('div'));
+  $toast.html(options.message);
+  $toast.css({
+    borderRadius: options.borderRadius || TOAST_DEFAULT_BORDER_RADIUS,
+    color: options.color || TOAST_DEFAULT_COLOR,
+    backgroundColor: options.backgroundColor || TOAST_DEFAULT_BACKGROUND_COLOR
+  });
+  if (options.fixedWidth) {
+    $toast.attr('title', options.message);
+    $toast.css({
+      width: options.fixedWidth,
+      textOverflow: 'ellipsis'
+    });
+  }
+  $toast.addClass(TOAST_CLASS);
+  POSITION_FN[options.position || TOAST_DEFAULT_POSITION]($toast);
+  $toast
+    .hide()
+    .appendTo($body)
+    .fadeIn(options.fade || TOAST_DEFAULT_FADE_SPEED);
+  $toast.toastIndex = toasts.length;
+  return $toast;
+}
+
 function createCloseButton(options) {
   const $closeButton = $(document.createElement('span'));
   $closeButton.css({
@@ -125,12 +130,18 @@ function shadeColor(color, amount) {
   let blue = hexColor & 0x0000FF;
   if (red >= amount) {
     red -= amount;
+  } else {
+    red = 0;
   }
   if (green >= amount) {
     green -= amount;
+  } else {
+    green = 0;
   }
   if (blue >= amount) {
     blue -= amount;
+  } else {
+    blue = 0;
   }
   return "#" + (0x1000000 + (red * 0x10000) + (green * 0x100) + blue).toString(16).slice(1);
 }
