@@ -47,6 +47,7 @@ describe('kill()', () => {
 
     kill(toasts, index, options);
 
+    expect($._data($toast1.get()[0]).events).toBeUndefined();
     expect($._data($closeButton.get()[0]).events).toBeUndefined();
     expect($body.children('.' + TEST_TOAST_CLASS).length).toEqual(0);
     expect(toasts.length).toEqual(1);
@@ -67,6 +68,7 @@ describe('kill()', () => {
 
     kill(toasts, index, options);
 
+    expect($._data($toast1.get()[0]).events).toBeUndefined();
     expect($body.children('.' + TEST_TOAST_CLASS).length).toEqual(0);
     expect(toasts.length).toEqual(1);
     expect($toast2.toastIndex).toEqual(0);

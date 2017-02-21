@@ -26,6 +26,7 @@ const SHIFT_FN = {
 
 const kill = (toasts, index, options) => {
   const $toast = toasts[index];
+  $toast.off('click');
   if ($toast.$closeButton) {
     $toast.$closeButton.off('click');
   }
