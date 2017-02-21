@@ -1,7 +1,10 @@
 # Vue.js toast plugin
+[![NPM](https://nodei.co/npm/@kashio/vue-toast.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/@kashio/vue-toast/)
 
 [![Build status](https://api.travis-ci.org/Kashio/vue-toast.svg?branch=master)](https://travis-ci.org/Kashio/vue-toast)
 [![Coverage Status](https://coveralls.io/repos/github/Kashio/vue-toast/badge.svg?branch=master)](https://coveralls.io/github/Kashio/vue-toast?branch=master)
+[![Dependency Status](https://david-dm.org/kashio/vue-toast.svg)](https://david-dm.org/Kashio/vue-toast)
+[![devDependency Status](https://david-dm.org/Kashio/vue-toast/dev-status.svg)](https://david-dm.org/Kashio/vue-toast?type=dev)
 
 ## Basic usage
 ```js
