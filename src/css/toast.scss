@@ -1,19 +1,26 @@
 @import './utilities/fonts';
 
 $font-stack: 'Open Sans', sans-serif;
+$box-shadow-color: #999;
+$box-shadow-color-hover: black;
 
 :local .toast {
+  &:hover {
+    box-shadow: 0 0 12px $box-shadow-color-hover;
+  }
   position: fixed;
   overflow: hidden;
+  word-wrap: break-word;
   line-height: 20px;
   padding: 15px 10px;
   font-family: $font-stack;
+  cursor: pointer;
+  box-shadow: 0 0 12px $box-shadow-color;
 }
 
 :local .toast-close-button:before {
   content: '×';
   position: absolute;
-  cursor: pointer;
   top: 0;
   right: 5px;
   font-weight: bold;

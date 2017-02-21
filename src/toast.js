@@ -10,7 +10,7 @@ const TOAST_DEFAULT_BACKGROUND_COLOR = 'rgba(60, 118, 61, .9)';
 const TOAST_DEFAULT_POSITION = 'bottom right';
 const TOAST_DEFAULT_FADE_SPEED = 400;
 const TOAST_DEFAULT_TIME = 3000;
-const TOAST_MARGIN = 5;
+const TOAST_MARGIN = 10;
 const POSITION_FN = {
   'bottom left': positionToastBottomLeft,
   'bottom right': positionToastBottomRight,
@@ -42,10 +42,14 @@ const kill = (toasts, index, options) => {
 
 const create = (toasts, options) => {
   const $toast = createToast(toasts, options);
+  const toastHeight = $toast.outerHeight();
+  $toast.click(() => {
+    kill(toasts, $toast.toastIndex, options);
+    reverseShift(toasts, $toast.toastIndex, toastHeight, options);
+  });
   if (options.closeButton) {
     const $closeButton = createCloseButton(options);
     $toast.$closeButton = $closeButton;
-    const toastHeight = $toast.outerHeight();
     $closeButton.click(() => {
       kill(toasts, $toast.toastIndex, options);
       reverseShift(toasts, $toast.toastIndex, toastHeight, options);
@@ -89,10 +93,7 @@ function createToast(toasts, options) {
   });
   if (options.fixedWidth) {
     $toast.attr('title', options.message);
-    $toast.css({
-      width: options.fixedWidth,
-      textOverflow: 'ellipsis'
-    });
+    $toast.css('width', options.fixedWidth);
   }
   $toast.addClass(TOAST_CLASS);
   POSITION_FN[options.position || TOAST_DEFAULT_POSITION]($toast);

@@ -113,6 +113,7 @@ describe('create()', () => {
 
     create(toasts, options);
 
+    expect($._data($toast.get()[0]).events.click.length).toEqual(1);
     expect($toast.$closeButton).toEqual($closeButton);
     expect($._data($closeButton.get()[0]).events.click.length).toEqual(1);
     expect($toast.children('.' + TEST_TOAST_CLOSE_BUTTON_CLASS).length).toEqual(1);
@@ -146,6 +147,7 @@ describe('create()', () => {
 
     create(toasts, options);
 
+    expect($._data($toast.get()[0]).events.click.length).toEqual(1);
     expect($toast.$progressBar).toEqual($progressBar);
     expect($toast.children('.' + TEST_TOAST_PROGRESS_BAR_CLASS).length).toEqual(1);
     expect(toasts.length).toEqual(1);
@@ -173,6 +175,7 @@ describe('create()', () => {
 
     create(toasts, options);
 
+    expect($._data($toast.get()[0]).events.click.length).toEqual(1);
     expect($toast.$progressBar).toEqual($progressBar);
     expect($toast.children('.' + TEST_TOAST_PROGRESS_BAR_CLASS).length).toEqual(1);
     expect(toasts.length).toEqual(1);
@@ -259,7 +262,6 @@ describe('createToast()', () => {
     expect($toast.css('background-color')).toBeColorEqual(options.backgroundColor);
     expect($toast.attr('title')).toEqual(options.message);
     expect($toast.css('width')).toEqual(options.fixedWidth + 'px');
-    expect($toast.css('text-overflow')).toEqual('ellipsis');
     expect($toast.hasClass(TOAST_CLASS)).toBeTruthy();
     expect(positionToastBottomRightSpy).toHaveBeenCalled();
     expect(positionToastBottomRightSpy).toHaveBeenCalledWith($toast);
