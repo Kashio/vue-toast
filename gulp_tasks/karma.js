@@ -22,7 +22,7 @@ function karmaSingleRun(done) {
 }
 
 function karmaAutoRun(done) {
-  const configFile = path.join(process.cwd(), conf.path.config('karma-auto.conf.js'));
+  const configFile = path.join(process.cwd(), conf.path.config('karma.auto.conf.js'));
   const karmaServer = new karma.Server({configFile}, karmaFinishHandler(done));
   karmaServer.start();
 }

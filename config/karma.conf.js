@@ -29,7 +29,7 @@ module.exports = function (config) {
       type: 'lcov',
       dir: 'coverage/'
     },
-    webpack: require('./webpack-test.conf.js'),
+    webpack: require('./webpack.test.conf.js'),
     webpackMiddleware: {
       noInfo: true
     },

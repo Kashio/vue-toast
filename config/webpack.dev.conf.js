@@ -1,12 +1,11 @@
-const webpack = require('webpack');
 const conf = require('../gulp.conf');
 const path = require('path');
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const autoprefixer = require('autoprefixer');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  mode: 'development',
   module: {
     rules: [
       {
@@ -21,10 +20,7 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
       },
       {
         test: /\.js$/,
@@ -34,17 +30,13 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.LoaderOptionsPlugin({
-      debug: true,
-      options: {
-        postcss: [autoprefixer]
-      }
-    }),
     new HtmlWebpackPlugin({
       template: 'index.html'
     }),
-    new ExtractTextPlugin("style.css")
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css'
+    })
   ],
   devtool: 'source-map',
   context: path.join(process.cwd(), conf.paths.src),

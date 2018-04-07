@@ -1,8 +1,10 @@
-const webpack = require('webpack');
 const conf = require('../gulp.conf');
 const path = require('path');
 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = {
+  mode: 'production',
   module: {
     rules: [
       {
@@ -17,7 +19,7 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader?minimize', 'postcss-loader', 'sass-loader']
       },
       {
         test: /\.js$/,
@@ -27,11 +29,16 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.LoaderOptionsPlugin({
-      debug: true
-    })
+    new MiniCssExtractPlugin('index-[contenthash].css'),
   ],
-  devtool: 'inline-source-map',
   context: path.join(process.cwd(), conf.paths.src),
-  entry: './app.js'
+  output: {
+    path: path.join(process.cwd(), conf.paths.dist),
+    filename: '[name].js',
+    library: 'VueToast',
+    libraryTarget: 'commonjs2'
+  },
+  entry: {
+    index: './index.js'
+  }
 };

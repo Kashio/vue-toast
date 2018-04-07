@@ -29,7 +29,7 @@ describe('kill()', () => {
   beforeEach(() => {
     $.fx.off = true;
   });
-  it('should remove click event listener from the close button, detach the toast from the dom, and adjust other toasts indices', () => {
+  it('should remove click event listener from the close button, and detach the toast from the dom', () => {
     const $body = $('body');
     const toasts = [];
     const $toast1 = $(document.createElement('div'));
@@ -37,41 +37,33 @@ describe('kill()', () => {
     const $closeButton = $(document.createElement('div'));
     $closeButton.click(() => {});
     $toast1.$closeButton = $closeButton;
-    $toast1.toastIndex = 0;
     const $toast2 = $(document.createElement('div'));
-    $toast2.toastIndex = 1;
     toasts.push($toast1);
     toasts.push($toast2);
-    const index = 0;
     const options = {};
 
-    kill(toasts, index, options);
+    kill(toasts, $toast1, options);
 
     expect($._data($toast1.get()[0]).events).toBeUndefined();
     expect($._data($closeButton.get()[0]).events).toBeUndefined();
     expect($body.children('.' + TEST_TOAST_CLASS).length).toEqual(0);
     expect(toasts.length).toEqual(1);
-    expect($toast2.toastIndex).toEqual(0);
   });
-  it('should detach the toast from the dom, and adjust other toasts indices', () => {
+  it('should detach the toast from the dom', () => {
     const $body = $('body');
     const toasts = [];
     const $toast1 = $(document.createElement('div'));
     $toast1.addClass(TEST_TOAST_CLASS);
-    $toast1.toastIndex = 0;
     const $toast2 = $(document.createElement('div'));
-    $toast2.toastIndex = 1;
     toasts.push($toast1);
     toasts.push($toast2);
-    const index = 0;
     const options = {};
 
-    kill(toasts, index, options);
+    kill(toasts, $toast1, options);
 
     expect($._data($toast1.get()[0]).events).toBeUndefined();
     expect($body.children('.' + TEST_TOAST_CLASS).length).toEqual(0);
     expect(toasts.length).toEqual(1);
-    expect($toast2.toastIndex).toEqual(0);
   });
 });
 
@@ -81,7 +73,6 @@ describe('create()', () => {
   const TOAST_HEIGHT = 5;
   let $toast;
   const createToastSpy = jasmine.createSpy('createToastSpy').and.callFake(() => {
-    $toast.toastIndex = TOAST_INDEX;
     $toast.outerHeight = () => {
       return TOAST_HEIGHT;
     };
@@ -124,7 +115,7 @@ describe('create()', () => {
     $closeButton.trigger('click');
 
     expect(killSpy).toHaveBeenCalled();
-    expect(killSpy).toHaveBeenCalledWith(toasts, TOAST_INDEX, options);
+    expect(killSpy).toHaveBeenCalledWith(toasts, $toast, options);
     expect(reverseShiftSpy).toHaveBeenCalled();
     expect(reverseShiftSpy).toHaveBeenCalledWith(toasts, TOAST_INDEX, TOAST_HEIGHT, options);
 
@@ -268,7 +259,6 @@ describe('createToast()', () => {
     expect(positionToastBottomRightSpy).toHaveBeenCalled();
     expect(positionToastBottomRightSpy).toHaveBeenCalledWith($toast);
     expect($body.children('.' + TOAST_CLASS).length).toEqual(1);
-    expect($toast.toastIndex).toEqual(0);
 
     $toast.detach();
   });
@@ -290,7 +280,6 @@ describe('createToast()', () => {
     expect(positionToastBottomRightSpy).toHaveBeenCalled();
     expect(positionToastBottomRightSpy).toHaveBeenCalledWith($toast);
     expect($body.children('.' + TOAST_CLASS).length).toEqual(1);
-    expect($toast.toastIndex).toEqual(0);
 
     $toast.detach();
   });

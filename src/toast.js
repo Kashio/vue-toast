@@ -24,36 +24,33 @@ const SHIFT_FN = {
   'top right': shiftDown
 };
 
-const kill = (toasts, index, options) => {
-  const $toast = toasts[index];
-  $toast.off('click');
-  if ($toast.$closeButton) {
-    $toast.$closeButton.off('click');
+const kill = (toasts, toast, options) => {
+  toasts.splice(toasts.indexOf(toast), 1);
+  toast.off('click');
+  if (toast.$closeButton) {
+    toast.$closeButton.off('click');
   }
-  $toast
+  toast
     .stop()
     .fadeOut(options.fade || TOAST_DEFAULT_FADE_SPEED, () => {
-      $toast.detach();
+      toast.detach();
     });
-  toasts.splice(index, 1);
-  for (let i = index; i < toasts.length; i++) {
-    toasts[i].toastIndex--;
-  }
 };
 
 const create = (toasts, options) => {
   const $toast = createToast(toasts, options);
+  toasts.push($toast);
   const toastHeight = $toast.outerHeight();
   $toast.click(() => {
-    kill(toasts, $toast.toastIndex, options);
-    reverseShift(toasts, $toast.toastIndex, toastHeight, options);
+    reverseShift(toasts, toasts.indexOf($toast), toastHeight, options);
+    kill(toasts, $toast, options);
   });
   if (options.closeButton) {
     const $closeButton = createCloseButton(options);
     $toast.$closeButton = $closeButton;
     $closeButton.click(() => {
-      kill(toasts, $toast.toastIndex, options);
-      reverseShift(toasts, $toast.toastIndex, toastHeight, options);
+      reverseShift(toasts, toasts.indexOf($toast), toastHeight, options);
+      kill(toasts, $toast, options);
     });
     $toast.append($closeButton);
   } else {
@@ -66,12 +63,12 @@ const create = (toasts, options) => {
     setTimeout(() => {
       $toast
         .fadeOut(options.fade || TOAST_DEFAULT_FADE_SPEED, () => {
-          $toast.detach();
-          toasts.shift();
+          if (toasts.indexOf($toast) !== -1) {
+            kill(toasts, $toast, options);
+          }
         });
     }, options.time || TOAST_DEFAULT_TIME);
   }
-  toasts.push($toast);
 };
 
 const shift = (toasts, options) => {
@@ -102,7 +99,6 @@ function createToast(toasts, options) {
     .hide()
     .appendTo($body)
     .fadeIn(options.fade || TOAST_DEFAULT_FADE_SPEED);
-  $toast.toastIndex = toasts.length;
   return $toast;
 }
 
