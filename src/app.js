@@ -33,8 +33,7 @@ const vm = new Vue({
           color: 'black',
           backgroundColor: '#e2eef9',
           fixedWidth: 300,
-          closeButton: true,
-          time: 5000
+          closeButton: true
         });
       }
     }
