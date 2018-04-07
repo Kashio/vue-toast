@@ -9,7 +9,7 @@
     "serve:dist": "gulp serve:dist",
     "test": "gulp test",
     "test:auto": "gulp test:auto",
-    "preversion": "npm test",
+    "preversion": "npm test && npm run build",
     "postversion": "git push && git push --tags && npm publish"
   },
   "repository": {
