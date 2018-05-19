@@ -9,6 +9,7 @@ $box-shadow-color-hover: black;
     box-shadow: 0 0 12px $box-shadow-color-hover;
   }
   position: fixed;
+  z-index: 9999;
   overflow: hidden;
   word-wrap: break-word;
   line-height: 20px;
